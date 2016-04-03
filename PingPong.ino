@@ -55,43 +55,41 @@ void loop() // Hauptprogramm
             
               tone(pinspeaker, 1600, 100); // Soundeffekt
               
-              prevPoint_L = true;
               points_L = points_L + 1
+              prevPoint_L = true;
               
-              show(points_L, points_R, !prevPoint_L, prevPoint_L);
               break;
               
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler links
             
               tone(pinspeaker, 1000, 100); // Soundeffekt
               
-              if(points_L != 0) show(--points_L, points_R, !prevPoint_L, prevPoint_L);
-              else 
-              {
-                prevPoint_L = !prevPoint_L;
-                show(points_L, points_R, !prevPoint_L, prevPoint_L);
-              }
+              if(points_L > 0) points_L = points_L - 1
+
+              else prevPoint_L = !prevPoint_L;
+
               break;
           }
       
           switch(readButton_r()) // Knopf von Spieler Rechts
           {
-            case 1: //Klick
-              tone(pinspeaker,1600,100);
-              prevPoint_L = false;
-              points_R = points_R + 1
+            case 1: //Einfachklick: Punkt fuer den Spieler rechts
+            
+              tone(pinspeaker, 1600, 100); // Soundeffekt
               
-              show(points_L, points_R, !prevPoint_L, prevPoint_L);
+              points_R = points_R + 1
+              prevPoint_L = false;
+              
               break;
               
-            case 2: // Doppelklick
-            tone(pinspeaker,1000,100);
-              if(points_R != 0) show(points_L, --points_R, !prevPoint_L, prevPoint_L);
-              else 
-              {
-                prevPoint_L = !prevPoint_L;
-                show(points_L, points_R, !prevPoint_L, prevPoint_L);
-              }
+            case 2: // Doppelklick: ein Punkt abzug fuer den Spieler rechts
+            
+              tone(pinspeaker, 1000, 100); // Soundeffekt
+              
+              if(points_R > 0) points_R = points_R - 1
+              
+              else prevPoint_L = !prevPoint_L;
+
               break;
           }
 
@@ -119,11 +117,11 @@ void loop() // Hauptprogramm
             delay(100);   
             delay(3000);
             
-            punkte_l = 0;
-            punkte_r = 0;
-            show(punkte_l, punkte_r, !letzter_pkt_l, letzter_pkt_l);
+            points_L = 0; // Punkte fuer beide Spieler zurueck setzen
+            points_R = 0;
           }
           
+          show(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
           prevMillis = millis();
   }
 }
