@@ -36,10 +36,10 @@ void setup()  // Initialisieren
   digitalWrite(pinSegmentData, LOW);
   digitalWrite(pinSegmentLatch, LOW);
 
-  show(88, 88, true, true); // Anzeigetafeltest: Alle Segmente mit Dezimalpunkten fuer 750 ms einschalten.
+  display(88, 88, true, true); // Anzeigetafeltest: Alle Segmente mit Dezimalpunkten fuer 750 ms einschalten.
   delay(750);
   
-  show(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
+  display(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
 }
 
 
@@ -126,7 +126,7 @@ void loop() // Hauptprogramm
             points_R = 0;
           }
           
-          show(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
+          display(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
           prevMillis = millis(); // Zeit der letzten Ausfuehrung speichern
   }
 }
