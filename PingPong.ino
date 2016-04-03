@@ -60,6 +60,7 @@ void loop() // Hauptprogramm
               
               break;
               
+              
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler links
             
               tone(pinspeaker, 1000, 100); // Soundeffekt
@@ -70,6 +71,8 @@ void loop() // Hauptprogramm
 
               break;
           }
+          
+          
       
           switch(readButton_r()) // Knopf von Spieler Rechts
           {
@@ -81,6 +84,7 @@ void loop() // Hauptprogramm
               prevPoint_L = false;
               
               break;
+              
               
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler rechts
             
