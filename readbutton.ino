@@ -1,41 +1,44 @@
-bool prev_high_l = false;
-bool first_click_l = false;
-bool second_click_l = false;
-unsigned long prevclickMillis_l = 0;
+// weitere globale Variabeln
+bool prevHigh_L = false; // letzter status des linken Knopfes
+bool firstClick_L = false; // Einfachklick
+bool secondClick_L = false; // Doppelklick
+unsigned long prevClickMillis_L = 0; // Zeit nachdem loslassen des Knopfes
 
-bool prev_high_r = false;
-bool first_click_r = false;
-bool second_click_r = false;
-unsigned long prevclickMillis_r = 0;
-
-byte readButton_l()
+// Returns: liest den pin "pinButton_L" aus und gibt folgende Werte zurueck:
+// 0: Kein Klick
+// 1: Einfachklick
+// 2: Doppelklick
+// Die Rueckgabe erfolgt erst wenn der Knopf losgelassen wird UND nachdem die Zeit eines potenziell folgenden Doppelklick abgewartet ist
+byte readButton_L()
 {
-  if(digitalRead(button_l) == HIGH) //gedrueckt
+  if(digitalRead(pinButton_L) == HIGH) // gedrueckt
   {
-    first_click_l = true; // Einfachklick
-    if(millis() - prevclickMillis_l < click_pause) second_click_l = true; //Doppelklick
-    prev_high_l = true;
+    firstClick_L = true; // mindestens Einfachklick
+    if(millis() - prevClickMillis_L < maxDoubleclickPause) secondClick_L = true; // Doppelklick falls der klick unter der Wartezeit eines Doppelklickes erfolgt
+    
+    prevHigh_L = true; // letzter Knopf status HIGH 
   }
   
-  else //nicht gedrueckt
+  else // nicht gedrueckt
   {
-    if(prev_high_l == true) //Drop
+    if(prevHigh_L == true) // Knopf losgelassen 
     {         
-      prevclickMillis_l = millis();
-      prev_high_l = false;
+      prevClickMillis_L = millis(); // Zeit merken
+      prevHigh_L = false;
     }
     
-    else if(first_click_l == true and (millis() - prevclickMillis_l >= click_pause)) //Warten bis klick sequenz abgeschlossen
+    else if(millis() - prevClickMillis_L >= maxDoubleclickPause) // Warten bis klick sequenz abgeschlossen
       {
-        if(second_click_l == true) //Doppelklick
+        if(secondClick_L == true) // Doppelklick
         {
-          first_click_l = false;
-          second_click_l = false;
+          firstClick_L = false; // flags zuruecksetzen
+          secondClick_L = false;
           return 2;
         }
-        else //Einfachklick
+        
+        if(firstClick_L == true)  // Einfachklick
         {
-          first_click_l = false;
+          firstClick_L = false; // flag zuruecksetzen
           return 1;
         }
       }
@@ -45,34 +48,46 @@ byte readButton_l()
 
 
 
-byte readButton_r()
+// weitere globale Variabeln
+bool prevHigh_R = false; // letzter status des linken Knopfes
+bool firstClick_R = false; // Einfachklick
+bool secondClick_R = false; // Doppelklick
+unsigned long prevClickMillis_R = 0; // Zeit nachdem loslassen des Knopfes
+
+//Returns: liest den pin "pinButton_R" aus und gibt folgende Werte zurueck:
+// 0: Kein Klick
+// 1: Einfachklick
+// 2: Doppelklick
+// Die Rueckgabe erfolgt erst wenn der Knopf losgelassen wird UND nachdem die Zeit eines potenziell folgenden Doppelklick abgewartet ist
+byte readButton_R()
 {
-  if(digitalRead(button_r) == HIGH) //gedrueckt
+  if(digitalRead(pinButton_R) == HIGH) //gedrueckt
   {
-    first_click_r = true; // Einfachklick
-    if(millis() - prevclickMillis_r < click_pause) second_click_r = true; //Doppelklick
-    prev_high_r = true;
+    firstClick_R = true; // mindestens Einfachklick
+    if(millis() - prevClickMillis_R < maxDoubleclickPause) secondClick_R = true; // Doppelklick falls der klick unter der Wartezeit eines Doppelklickes erfolgt
+    prevHigh_R = true; // letzter Knopf status HIGH
   }
   
-  else //nicht gedrueckt
+  else // nicht gedrueckt
   {
-    if(prev_high_r == true) //Drop
+    if(prevHigh_R == true) // Knopf losgelassen 
     {         
-      prevclickMillis_r = millis();
-      prev_high_r = false;
+      prevClickMillis_R = millis(); // Zeit merken
+      prevHigh_R = false;
     }
     
-    else if(first_click_r == true and (millis() - prevclickMillis_r >= click_pause)) //Warten bis klick sequenz abgeschlossen
+    else if(millis() - prevClickMillis_R >= maxDoubleclickPause) // Warten bis klick sequenz abgeschlossen
       {
-        if(second_click_r == true) //Doppelklick
+        if(secondClick_R == true) //Doppelklick
         {
-          first_click_r = false;
-          second_click_r = false;
+          firstClick_R = false; // flags zuruecksetzen
+          secondClick_R = false;
           return 2;
         }
-        else //Einfachklick
+        
+        if(firstClick_R == true) //Einfachklick
         {
-          first_click_r = false;
+          firstClick_R = false; // flag zuruecksetzen
           return 1;
         }
       }
