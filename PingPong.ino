@@ -53,7 +53,7 @@ void loop() // Hauptprogramm
           {
             case 1: //Einfachklick: Punkt fuer den Spieler links
             
-              tone(pinspeaker, 1600, 100); // Soundeffekt
+              tone(pinSpeaker, 1600, 100); // Soundeffekt
               
               points_L = points_L + 1 // Punkte fuer Spieler Links um 1 erhoehen
               prevPoint_L = true; // Spieler Links hat den letzten Punkt gemacht
@@ -63,7 +63,7 @@ void loop() // Hauptprogramm
               
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler links
             
-              tone(pinspeaker, 1000, 100); // Soundeffekt
+              tone(pinSpeaker, 1000, 100); // Soundeffekt
               
               if(points_L > 0) points_L = points_L - 1 // Punkte fuer Spieler Links um 1 verringern (falls der Spieler ueberhaupt punkte hat)
 
@@ -78,7 +78,7 @@ void loop() // Hauptprogramm
           {
             case 1: //Einfachklick: Punkt fuer den Spieler rechts
             
-              tone(pinspeaker, 1600, 100); // Soundeffekt
+              tone(pinSpeaker, 1600, 100); // Soundeffekt
               
               points_R = points_R + 1 // Punkte fuer Spieler Rechts um 1 erhoehen
               prevPoint_L = false; // Spieler Rechts hat den letzten Punkt gemacht
@@ -88,7 +88,7 @@ void loop() // Hauptprogramm
               
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler rechts
             
-              tone(pinspeaker, 1000, 100); // Soundeffekt
+              tone(pinSpeaker, 1000, 100); // Soundeffekt
               
               if(points_R > 0) points_R = points_R - 1 // Punkte fuer Spieler Rechts um 1 verringern (falls der Spieler ueberhaupt punkte hat)
               
@@ -101,23 +101,23 @@ void loop() // Hauptprogramm
 
           if((punkte_l >= 11 or punkte_r >= 11) and abs(punkte_l - punkte_r) >= 2) // Sieg wenn ein Spieler mehr als 11 Punkte hat UND die Punktdifferenz midestens 2 ist
           {
-            tone(pinspeaker, 500, 250); // Soundeffekt
+            tone(pinSpeaker, 500, 250); // Soundeffekt
             delay(250);
-            tone(pinspeaker, 800, 250);
+            tone(pinSpeaker, 800, 250);
             delay(250);
-            tone(pinspeaker, 1000, 1000);
+            tone(pinSpeaker, 1000, 1000);
             delay(500);
-            tone(pinspeaker, 1200, 1000);
+            tone(pinSpeaker, 1200, 1000);
             delay(450);
-            noTone(pinspeaker);
+            noTone(pinSpeaker);
             delay(50);
-            tone(pinspeaker, 1200, 1000);
+            tone(pinSpeaker, 1200, 1000);
             delay(500);
-            noTone(pinspeaker);
+            noTone(pinSpeaker);
             delay(100);
-            tone(pinspeaker, 1600, 1000);
+            tone(pinSpeaker, 1600, 1000);
             delay(500);
-            noTone(pinspeaker);
+            noTone(pinSpeaker);
             delay(100);
             
             delay(2000);
