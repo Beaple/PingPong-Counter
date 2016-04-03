@@ -58,7 +58,7 @@ void loop() // Hauptprogramm
               points_L = points_L + 1
               prevPoint_L = true;
               
-              break;
+            break;
               
               
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler links
@@ -69,7 +69,7 @@ void loop() // Hauptprogramm
 
               else prevPoint_L = !prevPoint_L;
 
-              break;
+            break;
           }
           
           
@@ -83,7 +83,7 @@ void loop() // Hauptprogramm
               points_R = points_R + 1
               prevPoint_L = false;
               
-              break;
+            break;
               
               
             case 2: // Doppelklick: ein Punkt abzug fuer den Spieler rechts
@@ -94,7 +94,7 @@ void loop() // Hauptprogramm
               
               else prevPoint_L = !prevPoint_L;
 
-              break;
+            break;
           }
 
 
