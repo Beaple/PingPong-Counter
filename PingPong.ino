@@ -1,81 +1,98 @@
-
 //Ein- und Ausgang Pins definieren
-const byte segmentClock = 5;
-const byte segmentLatch = 4;
-const byte segmentData = 6;
-const byte button_l = 2;
-const byte button_r = 3;
-const byte pinspeaker = 11;
+
+const byte pinSegmentClock = 5; // Drei Ausgang-Pins fuer die Anzeigetafeln
+const byte pinSegmentLatch = 4;
+const byte pinSegmentData = 6;
+
+const byte pinButton_L = 2; // Je ein Eingangs Pin fuer die Knoepfe
+const byte pinButton_R = 3;
+
+const byte pinSpeaker = 11; // ein Ausgangspin fuer den Piezo Lautsprecher
+
 
 //Globale Variabeln
-byte punkte_l = 0;
-byte punkte_r = 0;
-bool letzter_pkt_l = true;
 
-unsigned long currentMillis = 0;
+byte points_L = 0; // Punkte fuer beide Spieler
+byte points_R = 0;
+bool prevPoint_L = true; // Um zu bestimmen welcher Spieler das Anspiel hat
+
+unsigned long currentMillis = 0; //zwei Zeit Variabeln
 unsigned long prevMillis = 0;
 
-unsigned long sampling_rate = 20;
-unsigned long click_pause = 200;
+unsigned long buttonSampling = 20; // Wartezeit bis zum erneuten Auslesen der Knoepfe in ms
+unsigned long maxDoubleclickPause = 200; // maximale Zeit eines Doppelklick intervalls in ms
 
-void setup() { // Initialisieren
-  Serial.begin(9600);
 
-  pinMode(segmentClock, OUTPUT); // Pins als Ausgaenge definieren
-  pinMode(segmentData, OUTPUT);
-  pinMode(segmentLatch, OUTPUT);
-  pinMode(button_l, INPUT_PULLUP);
-  pinMode(button_r, INPUT_PULLUP);
 
-  digitalWrite(segmentClock, LOW);
-  digitalWrite(segmentData, LOW);
-  digitalWrite(segmentLatch, LOW);
+void setup()  // Initialisieren
+{
+  pinMode(pinSegmentClock, OUTPUT); // Drei Ausgangs Pins fuer die Anzeigetafeln (als Output)
+  pinMode(pinSegmentData, OUTPUT);
+  pinMode(pinSegmentLatch, OUTPUT);
+  pinMode(pinButton_L, INPUT_PULLUP); // Je ein Eingangs Pin fuer die Knoepfe (als Input mit Pullup Widerstand)
+  pinMode(pinButton_R, INPUT_PULLUP);
 
-  show(88, 88, true, true); //Displaytest
+  digitalWrite(pinSegmentClock, LOW); // Die Ausgaenge fuer das Anzeigetafeln auf Low setzten
+  digitalWrite(pinSegmentData, LOW);
+  digitalWrite(pinSegmentLatch, LOW);
+
+  show(88, 88, true, true); // Anzeigetafeltest: Alle Segmente mit Dezimalpunkten fuer 750 ms einschalten.
   delay(750);
-  show(0, 0, !letzter_pkt_l, letzter_pkt_l);
+  
+  show(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
 }
 
 
-void loop() {
+void loop() // Hauptprogramm
+{
   currentMillis = millis();
 
-  if (currentMillis - prevMillis > sampling_rate) //nur alle 10ms ausfuehren
+  if (currentMillis - prevMillis > buttonSampling) //nur alle 10ms ausfuehren
   {
-          switch(readButton_l()) // Button_l
+          switch(readButton_l()) // Knopf von Spieler Links
           {
-            case 1: //Klick
-             tone(pinspeaker,1600,100);
-              letzter_pkt_l = true;
-              show(++punkte_l, punkte_r, !letzter_pkt_l, letzter_pkt_l);
+            case 1: //Einfachklick: Punkt fuer den Spieler links
+            
+              tone(pinspeaker, 1600, 100); // Soundeffekt
+              
+              prevPoint_L = true;
+              points_L = points_L + 1
+              
+              show(points_L, points_R, !prevPoint_L, prevPoint_L);
               break;
               
-            case 2: // Doppelklick
-              tone(pinspeaker,1000,100);
-              if(punkte_l != 0) show(--punkte_l, punkte_r, !letzter_pkt_l, letzter_pkt_l);
+            case 2: // Doppelklick: ein Punkt abzug fuer den Spieler links
+            
+              tone(pinspeaker, 1000, 100); // Soundeffekt
+              
+              if(points_L != 0) show(--points_L, points_R, !prevPoint_L, prevPoint_L);
               else 
               {
-                letzter_pkt_l = !letzter_pkt_l;
-                show(punkte_l, punkte_r, !letzter_pkt_l, letzter_pkt_l);
+                prevPoint_L = !prevPoint_L;
+                show(points_L, points_R, !prevPoint_L, prevPoint_L);
               }
+              break;
           }
       
-          switch(readButton_r()) // Button_r
+          switch(readButton_r()) // Knopf von Spieler Rechts
           {
             case 1: //Klick
               tone(pinspeaker,1600,100);
-              letzter_pkt_l = false;
-              show(punkte_l, ++punkte_r, !letzter_pkt_l, letzter_pkt_l);
+              prevPoint_L = false;
+              points_R = points_R + 1
+              
+              show(points_L, points_R, !prevPoint_L, prevPoint_L);
               break;
               
             case 2: // Doppelklick
             tone(pinspeaker,1000,100);
-              if(punkte_r != 0) show(punkte_l, --punkte_r, !letzter_pkt_l, letzter_pkt_l);
+              if(points_R != 0) show(points_L, --points_R, !prevPoint_L, prevPoint_L);
               else 
               {
-                letzter_pkt_l = !letzter_pkt_l;
-                show(punkte_l, punkte_r, !letzter_pkt_l, letzter_pkt_l);
+                prevPoint_L = !prevPoint_L;
+                show(points_L, points_R, !prevPoint_L, prevPoint_L);
               }
+              break;
           }
 
 
@@ -101,6 +118,7 @@ void loop() {
             noTone(pinspeaker);
             delay(100);   
             delay(3000);
+            
             punkte_l = 0;
             punkte_r = 0;
             show(punkte_l, punkte_r, !letzter_pkt_l, letzter_pkt_l);
