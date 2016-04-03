@@ -49,7 +49,7 @@ void loop() // Hauptprogramm
 
   if (currentMillis - prevMillis > buttonSampling) //nur alle 20ms (buttonSampling) ausfuehren
   {
-          switch(readButton_l()) // Knopf von Spieler Links
+          switch(readButton_L()) // Knopf von Spieler Links
           {
             case 1: //Einfachklick: Punkt fuer den Spieler links
             
@@ -74,7 +74,7 @@ void loop() // Hauptprogramm
           
           
       
-          switch(readButton_r()) // Knopf von Spieler Rechts
+          switch(readButton_R()) // Knopf von Spieler Rechts
           {
             case 1: //Einfachklick: Punkt fuer den Spieler rechts
             
