@@ -47,7 +47,7 @@ void loop() // Hauptprogramm
 {
   currentMillis = millis();
 
-  if (currentMillis - prevMillis > buttonSampling) //nur alle 10ms ausfuehren
+  if (currentMillis - prevMillis > buttonSampling) //nur alle 20ms (buttonSampling) ausfuehren
   {
           switch(readButton_l()) // Knopf von Spieler Links
           {
@@ -55,8 +55,8 @@ void loop() // Hauptprogramm
             
               tone(pinspeaker, 1600, 100); // Soundeffekt
               
-              points_L = points_L + 1
-              prevPoint_L = true;
+              points_L = points_L + 1 // Punkte fuer Spieler Links um 1 erhoehen
+              prevPoint_L = true; // Spieler Links hat den letzten Punkt gemacht
               
             break;
               
@@ -65,9 +65,9 @@ void loop() // Hauptprogramm
             
               tone(pinspeaker, 1000, 100); // Soundeffekt
               
-              if(points_L > 0) points_L = points_L - 1
+              if(points_L > 0) points_L = points_L - 1 // Punkte fuer Spieler Links um 1 verringern (falls der Spieler ueberhaupt punkte hat)
 
-              else prevPoint_L = !prevPoint_L;
+              else prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
 
             break;
           }
@@ -80,8 +80,8 @@ void loop() // Hauptprogramm
             
               tone(pinspeaker, 1600, 100); // Soundeffekt
               
-              points_R = points_R + 1
-              prevPoint_L = false;
+              points_R = points_R + 1 // Punkte fuer Spieler Rechts um 1 erhoehen
+              prevPoint_L = false; // Spieler Rechts hat den letzten Punkt gemacht
               
             break;
               
@@ -90,42 +90,43 @@ void loop() // Hauptprogramm
             
               tone(pinspeaker, 1000, 100); // Soundeffekt
               
-              if(points_R > 0) points_R = points_R - 1
+              if(points_R > 0) points_R = points_R - 1 // Punkte fuer Spieler Rechts um 1 verringern (falls der Spieler ueberhaupt punkte hat)
               
-              else prevPoint_L = !prevPoint_L;
+              else prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
 
             break;
           }
 
 
 
-          if((punkte_l >= 11 or punkte_r >= 11) and abs(punkte_l - punkte_r) >= 2) // Sieg
+          if((punkte_l >= 11 or punkte_r >= 11) and abs(punkte_l - punkte_r) >= 2) // Sieg wenn ein Spieler mehr als 11 Punkte hat UND die Punktdifferenz midestens 2 ist
           {
-            tone(pinspeaker,500,250);
+            tone(pinspeaker, 500, 250); // Soundeffekt
             delay(250);
-            tone(pinspeaker,800,250);
+            tone(pinspeaker, 800, 250);
             delay(250);
-            tone(pinspeaker,1000,1000);
+            tone(pinspeaker, 1000, 1000);
             delay(500);
-            tone(pinspeaker,1200,1000);
+            tone(pinspeaker, 1200, 1000);
             delay(450);
             noTone(pinspeaker);
             delay(50);
-            tone(pinspeaker,1200,1000);
+            tone(pinspeaker, 1200, 1000);
             delay(500);
             noTone(pinspeaker);
             delay(100);
-            tone(pinspeaker,1600,1000);
+            tone(pinspeaker, 1600, 1000);
             delay(500);
             noTone(pinspeaker);
-            delay(100);   
-            delay(3000);
+            delay(100);
+            
+            delay(2000);
             
             points_L = 0; // Punkte fuer beide Spieler zurueck setzen
             points_R = 0;
           }
           
           show(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
-          prevMillis = millis();
+          prevMillis = millis(); // Zeit der letzten Ausfuehrung speichern
   }
 }
