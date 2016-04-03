@@ -55,7 +55,7 @@ void loop() // Hauptprogramm
             
               tone(pinSpeaker, 1600, 100); // Soundeffekt
               
-              points_L = points_L + 1 // Punkte fuer Spieler Links um 1 erhoehen
+              points_L = points_L + 1; // Punkte fuer Spieler Links um 1 erhoehen
               prevPoint_L = true; // Spieler Links hat den letzten Punkt gemacht
               
             break;
@@ -65,7 +65,7 @@ void loop() // Hauptprogramm
             
               tone(pinSpeaker, 1000, 100); // Soundeffekt
               
-              if(points_L > 0) points_L = points_L - 1 // Punkte fuer Spieler Links um 1 verringern (falls der Spieler ueberhaupt punkte hat)
+              if(points_L > 0) points_L = points_L - 1; // Punkte fuer Spieler Links um 1 verringern (falls der Spieler ueberhaupt punkte hat)
 
               else prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
 
@@ -80,7 +80,7 @@ void loop() // Hauptprogramm
             
               tone(pinSpeaker, 1600, 100); // Soundeffekt
               
-              points_R = points_R + 1 // Punkte fuer Spieler Rechts um 1 erhoehen
+              points_R = points_R + 1; // Punkte fuer Spieler Rechts um 1 erhoehen
               prevPoint_L = false; // Spieler Rechts hat den letzten Punkt gemacht
               
             break;
@@ -90,7 +90,7 @@ void loop() // Hauptprogramm
             
               tone(pinSpeaker, 1000, 100); // Soundeffekt
               
-              if(points_R > 0) points_R = points_R - 1 // Punkte fuer Spieler Rechts um 1 verringern (falls der Spieler ueberhaupt punkte hat)
+              if(points_R > 0) points_R = points_R - 1; // Punkte fuer Spieler Rechts um 1 verringern (falls der Spieler ueberhaupt punkte hat)
               
               else prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
 
