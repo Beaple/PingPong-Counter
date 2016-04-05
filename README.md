@@ -14,12 +14,14 @@ FUNCTIONALITY:
 
 Bugs:
 - beim zuruecksetzten der Punkte kann es zu einem Fehler kommen bei dem der falsche Spieler das ANspiel bekommt.
-- falls ein Spieler mitten im Spiel noch 0 punkte hat z.B. (6:0) kann er immernoch das Anspiel wechseln
 - Falls der Spielstand hoch ist z.B. (13:12) führt jeder falsche klick/Doppelklick zum Sieg eines Spieler und zum ende des Spiels (keine Korrektur moeglichkeit)
 
 To Do:
 - langes Spiel auf 21 Punkte einbauen
 
+fixed:
+
+- falls ein Spieler mitten im Spiel noch 0 punkte hat z.B. (6:0) kann er immernoch das Anspiel wechseln
 
 
 Hardware List:
