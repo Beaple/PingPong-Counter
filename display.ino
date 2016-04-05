@@ -1,15 +1,17 @@
-//Erfordert:  - points_L, points_R byte variabeln < 100, bool dp_L, dp_R
+//Erfordert:  - points_L, points_R byte variabeln < 100, bool dp_LL, dp_LR, dp_RL, dp_RR
 //Effekt:     - Zeigt die Zahl "points_L" auf der linken Seite der Anzeige an.
 //            - Zeigt die Zahl "points_R" auf der rechten Seite der Anzeige an.
-//            - Wenn "dp_L" true ist werden beide Dezimalpunkte auf der linken Seite der Anzeigetafel angezeigt.
-//            - Wenn "dp_R" true ist werden beide Dezimalpunkte auf der rechten Seite der Anzeigetafel angezeigt.
-void display(byte points_L, byte points_R, bool dp_L, bool dp_R)
+//            - Wenn "dp_LL" true ist wird der Dezimalpunkte auf der  ganz linken Seite der Anzeigetafel angezeigt.
+//            - Wenn "dp_LR" true ist wird der Dezimalpunkte auf der mitte linken Seite der Anzeigetafel angezeigt.
+//            - Wenn "dp_RL" true ist wird der Dezimalpunkte auf der mitte rechten Seite der Anzeigetafel angezeigt.
+//            - Wenn "dp_RR" true ist wird der Dezimalpunkte auf der ganz rechten Seite der Anzeigetafel angezeigt.
+void display(byte points_L, byte points_R, bool dp_LL, bool dp_LR, bool dp_RL, bool dp_RR)
 {
-  postNumber(points_R % 10, dp_R); // 1ner rechts und Dezimalpunkt rechts
-  postNumber(points_R / 10, dp_R); // 10ner rechts und Dezimalpunkt rechts
+  postNumber(points_R % 10, dp_RR); // 1ner rechts und Dezimalpunkt rechts
+  postNumber(points_R / 10, dp_RL); // 10ner rechts und Dezimalpunkt rechts
 
-  postNumber(points_L % 10, dp_L); // 1ner links und Dezimalpunkt links
-  postNumber(points_L / 10, dp_L); // 10ner links und Dezimalpunkt links
+  postNumber(points_L % 10, dp_LR); // 1ner links und Dezimalpunkt links
+  postNumber(points_L / 10, dp_LL); // 10ner links und Dezimalpunkt links
 
 
   digitalWrite(pinSegmentLatch, LOW); // Register aufs Display schreiben
