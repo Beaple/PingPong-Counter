@@ -36,10 +36,10 @@ void setup()  // Initialisieren
   digitalWrite(pinSegmentData, LOW);
   digitalWrite(pinSegmentLatch, LOW);
 
-  display(88, 88, true, true); // Anzeigetafeltest: Alle Segmente mit Dezimalpunkten fuer 750 ms einschalten.
+  display(88, 88, true, true, true, true); // Anzeigetafeltest: Alle Segmente mit Dezimalpunkten fuer 750 ms einschalten.
   delay(750);
   
-  display(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
+  display(points_L, points_R, !prevPoint_L, !prevPoint_L, prevPoint_L, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
 }
 
 
@@ -97,7 +97,7 @@ void loop() // Hauptprogramm
             break;
           }
           
-          display(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
+          display(points_L, points_R, !prevPoint_L, !prevPoint_L, prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
 
 
           if((points_L >= 11 or points_R >= 11) and abs(points_L - points_R) >= 2) // Sieg wenn ein Spieler mehr als 11 Punkte hat UND die Punktdifferenz midestens 2 ist
@@ -126,7 +126,7 @@ void loop() // Hauptprogramm
             points_L = 0; // Punkte fuer beide Spieler zurueck setzen
             points_R = 0;
             
-            display(points_L, points_R, !prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
+            display(points_L, points_R, !prevPoint_L, !prevPoint_L, prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
           }
           
           prevMillis = millis(); // Zeit der letzten Ausfuehrung speichern
