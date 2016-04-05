@@ -67,7 +67,7 @@ void loop() // Hauptprogramm
               
               if(points_L > 0) points_L = points_L - 1; // Punkte fuer Spieler Links um 1 verringern (falls der Spieler ueberhaupt punkte hat)
 
-              else prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
+              else if(points_R == 0) prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
 
             break;
           }
@@ -92,7 +92,7 @@ void loop() // Hauptprogramm
               
               if(points_R > 0) points_R = points_R - 1; // Punkte fuer Spieler Rechts um 1 verringern (falls der Spieler ueberhaupt punkte hat)
               
-              else prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
+              else if(points_L == 0) prevPoint_L = !prevPoint_L; // Ansonsten Anspielwechsel
 
             break;
           }
