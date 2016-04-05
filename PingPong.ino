@@ -15,6 +15,7 @@ const byte pinSpeaker = 11; // ein Ausgangspin fuer den Piezo Lautsprecher
 byte points_L = 0; // Punkte fuer beide Spieler
 byte points_R = 0;
 bool prevPoint_L = true; // Um zu bestimmen welcher Spieler das Anspiel hat
+bool win21 = false; // Siegesbedingung 21 Punkte
 
 unsigned long currentMillis = 0; //zwei Zeit Variabeln
 unsigned long prevMillis = 0;
@@ -39,7 +40,7 @@ void setup()  // Initialisieren
   display(88, 88, true, true, true, true); // Anzeigetafeltest: Alle Segmente mit Dezimalpunkten fuer 750 ms einschalten.
   delay(750);
   
-  display(points_L, points_R, !prevPoint_L, !prevPoint_L, prevPoint_L, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
+  display(points_L, points_R, !prevPoint_L, !prevPoint_L and win21, prevPoint_L and win21, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
 }
 
 
@@ -67,8 +68,13 @@ void loop() // Hauptprogramm
               
               if(points_L > 0) points_L = points_L - 1; // Punkte fuer Spieler Links um 1 verringern (falls der Spieler ueberhaupt punkte hat)
 
-              else if(points_R == 0) prevPoint_L = !prevPoint_L; // Ansonsten wenn beide Spieler 0 Punkte haben: Anspielwechsel
-
+              else if(points_R == 0) {// Ansonsten wenn beide Spieler 0 Punkte haben:
+                if (prevPoint_L) prevPoint_L = !prevPoint_L; // Anpielwechsel
+                else {
+                  prevPoint_L = !prevPoint_L; //Anspielwechsel
+                  win21 = !win21; // Auf 21 spielen
+                }
+              }
             break;
           }
           
@@ -92,15 +98,20 @@ void loop() // Hauptprogramm
               
               if(points_R > 0) points_R = points_R - 1; // Punkte fuer Spieler Rechts um 1 verringern (falls der Spieler ueberhaupt punkte hat)
               
-              else if(points_L == 0) prevPoint_L = !prevPoint_L; // Ansonsten wenn beide Spieler 0 Punkte haben: Anspielwechsel
-
+              else if(points_L == 0) { // Ansonsten wenn beide Spieler 0 Punkte haben:
+                if (prevPoint_L) prevPoint_L = !prevPoint_L; // Anpielwechsel
+                else {
+                  prevPoint_L = !prevPoint_L; //Anspielwechsel
+                  win21 = !win21; // Auf 21 spielen
+                }
+              }
             break;
           }
           
-          display(points_L, points_R, !prevPoint_L, !prevPoint_L, prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
+          display(points_L, points_R, !prevPoint_L, !prevPoint_L and win21, prevPoint_L and win21, prevPoint_L); // Anzeige auf der Tafel
 
 
-          if((points_L >= 11 or points_R >= 11) and abs(points_L - points_R) >= 2) // Sieg wenn ein Spieler mehr als 11 Punkte hat UND die Punktdifferenz midestens 2 ist
+          if((points_L >= (11 + win21 * 10 ) or points_R >= (11 + win21 * 10 )) and abs(points_L - points_R) >= 2) // Sieg wenn ein Spieler mehr als 11/21 Punkte hat UND die Punktdifferenz midestens 2 ist
           {
             tone(pinSpeaker, 500, 250); // Soundeffekt
             delay(250);
@@ -126,7 +137,7 @@ void loop() // Hauptprogramm
             points_L = 0; // Punkte fuer beide Spieler zurueck setzen
             points_R = 0;
             
-            display(points_L, points_R, !prevPoint_L, !prevPoint_L, prevPoint_L, prevPoint_L); // Anzeige auf der Tafel
+            display(points_L, points_R, !prevPoint_L, !prevPoint_L and win21, prevPoint_L and win21, prevPoint_L); // Anzeige auf der Tafel
           }
           
           prevMillis = millis(); // Zeit der letzten Ausfuehrung speichern
