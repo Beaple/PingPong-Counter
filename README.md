@@ -10,19 +10,21 @@ FUNCTIONALITY:
 - When a player mistankenly pressed the button he can afterwards correct his score by doubleclicking the button which will decrease his score by 1.
 - whenever a button was pressed a short soundeffect will occure so no one can secretly increase his/her points.
 - The decimalpoints on the display are used to indicated which of the player has "Anpiels".
-- As there is no rule which player has "Anspiel" at the beginning of the game, one can change the indicater by doubleclicking either button while the score is still 0:0
+- As there is no rule which player has "Anspiel" at the beginning of the game, one can change the indicater by doubleclicking either button while the score is still 0:0 further doubleclicking will change the winning point from 11 to 21 points. this is indicated by the decimalpoints on the display
 
 Bugs:
 - beim zuruecksetzten der Punkte kann es zu einem Fehler kommen bei dem der falsche Spieler das ANspiel bekommt.
 - Falls der Spielstand hoch ist z.B. (13:12) führt jeder falsche klick/Doppelklick zum Sieg eines Spieler und zum ende des Spiels (keine Korrektur moeglichkeit)
 
 To Do:
-- langes Spiel auf 21 Punkte einbauen
+- new win sounds
+- win sounds as function
+- readbutton as class
 
 fixed:
 
 - falls ein Spieler mitten im Spiel noch 0 punkte hat z.B. (6:0) kann er immernoch das Anspiel wechseln
-
+- langes Spiel auf 21 Punkte einbauen
 
 Hardware List:
 - Arduino UNO
