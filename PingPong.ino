@@ -110,6 +110,17 @@ void loop() // Hauptprogramm
           
           display(points_L, points_R, !prevPoint_L, !prevPoint_L and win21, prevPoint_L and win21, prevPoint_L); // Anzeige auf der Tafel
 
+          if(win21 and (points_L == 10 or points_R == 10)) //Seitenwechsel
+          {
+            delay(200); // Soundeffekt
+            tone(pinSpeaker, 1600, 100);
+            delay(750);
+            
+            byte points_temp = points_L; //Punkte und Anspiel Tauschen
+            points_L = points_R;
+            points_R = points_temp;
+            prevPoint_L = !prevPoint_L;
+          }
 
           if((points_L >= (11 + win21 * 10 ) or points_R >= (11 + win21 * 10 )) and abs(points_L - points_R) >= 2) // Sieg wenn ein Spieler mehr als 11/21 Punkte hat UND die Punktdifferenz midestens 2 ist
           {
