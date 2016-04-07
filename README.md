@@ -18,13 +18,13 @@ Bugs:
 
 To Do:
 - new win sounds
-- win sounds as function
-- readbutton as class
+- player as class
 
 fixed:
 
 - falls ein Spieler mitten im Spiel noch 0 punkte hat z.B. (6:0) kann er immernoch das Anspiel wechseln
 - langes Spiel auf 21 Punkte einbauen
+- win sounds as function
 
 Hardware List:
 - Arduino UNO
