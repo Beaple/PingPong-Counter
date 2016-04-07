@@ -124,25 +124,7 @@ void loop() // Hauptprogramm
 
           if((points_L >= (11 + win21 * 10 ) or points_R >= (11 + win21 * 10 )) and abs(points_L - points_R) >= 2) // Sieg wenn ein Spieler mehr als 11/21 Punkte hat UND die Punktdifferenz midestens 2 ist
           {
-            tone(pinSpeaker, 500, 250); // Soundeffekt
-            delay(250);
-            tone(pinSpeaker, 800, 250);
-            delay(250);
-            tone(pinSpeaker, 1000, 1000);
-            delay(500);
-            tone(pinSpeaker, 1200, 1000);
-            delay(450);
-            noTone(pinSpeaker);
-            delay(50);
-            tone(pinSpeaker, 1200, 1000);
-            delay(500);
-            noTone(pinSpeaker);
-            delay(100);
-            tone(pinSpeaker, 1600, 1000);
-            delay(500);
-            noTone(pinSpeaker);
-            delay(100);
-            
+            victorysound(); // Soundeffekt
             delay(2000);
             
             points_L = 0; // Punkte fuer beide Spieler zurueck setzen
