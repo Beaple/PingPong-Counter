@@ -1,3 +1,4 @@
+/*
 // weitere globale Variabeln
 bool prevHigh_L = false; // letzter status des linken Knopfes
 bool firstClick_L = false; // Einfachklick
@@ -94,3 +95,4 @@ byte readButton_R()
   }
   return 0;
 }
+*/
