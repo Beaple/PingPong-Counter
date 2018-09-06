@@ -16,15 +16,7 @@ Bugs:
 - beim zuruecksetzten der Punkte kann es zu einem Fehler kommen bei dem der falsche Spieler das ANspiel bekommt.
 - Falls der Spielstand hoch ist z.B. (13:12) führt jeder falsche klick/Doppelklick zum Sieg eines Spieler und zum ende des Spiels (keine Korrektur moeglichkeit)
 
-To Do:
-- new win sounds
-- player as class
-
-fixed:
-
-- falls ein Spieler mitten im Spiel noch 0 punkte hat z.B. (6:0) kann er immernoch das Anspiel wechseln
-- langes Spiel auf 21 Punkte einbauen
-- win sounds as function
+- The Tone library conflicts with the IR remote library one has to change the timer https://forum.arduino.cc/index.php?topic=120955.0
 
 Hardware List:
 - Arduino UNO
@@ -33,3 +25,4 @@ Hardware List:
 - Digit Driver from https://www.sparkfun.com/products/8530
 - Arcade Buttons from https://www.sparkfun.com/products/9337
 - Piezzo Speaker from https://www.sparkfun.com/products/7950
+- IR remote sensor
