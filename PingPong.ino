@@ -1,3 +1,5 @@
+#include <IRremote.h> //include the library
+
 //Ein- und Ausgang Pins definieren
 
 const byte pinSegmentClock = 5; // Drei Ausgang-Pins fuer die Anzeigetafeln
@@ -9,6 +11,7 @@ const byte pinButton_R = 3;
 
 const byte pinSpeaker = 11; // ein Ausgangspin fuer den Piezo Lautsprecher
 
+const byte pinIR = 12; // pin for receiving IR signals
 
 //Globale Variabeln
 
@@ -16,13 +19,16 @@ byte points_L = 0; // Punkte fuer beide Spieler
 byte points_R = 0;
 bool prevPoint_L = true; // Um zu bestimmen welcher Spieler das Anspiel hat
 bool win21 = false; // Siegesbedingung 21 Punkte
+bool seitenwechsel_happend = false; // Damit der Seitenwechsel nur einmal passieren kann
 
 unsigned long currentMillis = 0; //zwei Zeit Variabeln
 unsigned long prevMillis = 0;
 
 unsigned long buttonSampling = 20; // Wartezeit bis zum erneuten Auslesen der Knoepfe in ms
-unsigned long maxDoubleclickPause = 200; // maximale Zeit eines Doppelklick intervalls in ms
+unsigned long maxDoubleclickPause = 300; // maximale Zeit eines Doppelklick intervalls in ms
 
+IRrecv irrecv(pinIR); //create a new instance of receiver
+decode_results results;
 
 
 void setup()  // Initialisieren
@@ -41,16 +47,19 @@ void setup()  // Initialisieren
   delay(750);
   
   display(points_L, points_R, !prevPoint_L, !prevPoint_L and win21, prevPoint_L and win21, prevPoint_L); // Anzeigetafeln fuer den Spielstart initialisieren
+
+  irrecv.enableIRIn(); //start the receiver
+
+ randomSeed(analogRead(0));
+
 }
 
 
 void loop() // Hauptprogramm
 {
-  currentMillis = millis();
+          currentMillis = millis();
 
-  if (currentMillis - prevMillis > buttonSampling) //nur alle 20ms (buttonSampling) ausfuehren
-  {
-          switch(readButton_L()) // Knopf von Spieler Links
+          switch(readIR()) // Knopf von Spieler Links
           {
             case 1: //Einfachklick: Punkt fuer den Spieler links
             
@@ -76,13 +85,8 @@ void loop() // Hauptprogramm
                 }
               }
             break;
-          }
-          
-          
-      
-          switch(readButton_R()) // Knopf von Spieler Rechts
-          {
-            case 1: //Einfachklick: Punkt fuer den Spieler rechts
+
+            case 3: //Einfachklick: Punkt fuer den Spieler rechts
             
               tone(pinSpeaker, 1600, 100); // Soundeffekt
               
@@ -92,7 +96,7 @@ void loop() // Hauptprogramm
             break;
               
               
-            case 2: // Doppelklick: ein Punkt abzug fuer den Spieler rechts
+            case 4: // Doppelklick: ein Punkt abzug fuer den Spieler rechts
             
               tone(pinSpeaker, 1000, 100); // Soundeffekt
               
@@ -110,7 +114,7 @@ void loop() // Hauptprogramm
           
           display(points_L, points_R, !prevPoint_L, !prevPoint_L and win21, prevPoint_L and win21, prevPoint_L); // Anzeige auf der Tafel
 
-          if(win21 and (points_L == 10 or points_R == 10)) //Seitenwechsel
+          if(win21 and (points_L == 10 or points_R == 10) and !seitenwechsel_happend) //Seitenwechsel
           {
             delay(200); // Soundeffekt
             tone(pinSpeaker, 1600, 100);
@@ -120,11 +124,17 @@ void loop() // Hauptprogramm
             points_L = points_R;
             points_R = points_temp;
             prevPoint_L = !prevPoint_L;
+			seitenwechsel_happend = true;
           }
 
           if((points_L >= (11 + win21 * 10 ) or points_R >= (11 + win21 * 10 )) and abs(points_L - points_R) >= 2) // Sieg wenn ein Spieler mehr als 11/21 Punkte hat UND die Punktdifferenz midestens 2 ist
           {
-            victorySound(); // Soundeffekt
+            if (random(100) < 10) {
+              pirates(); // Soundeffekt
+            }
+            else {
+              victorySound();
+            }
             delay(2000);
             
             points_L = 0; // Punkte fuer beide Spieler zurueck setzen
@@ -134,5 +144,5 @@ void loop() // Hauptprogramm
           }
           
           prevMillis = millis(); // Zeit der letzten Ausfuehrung speichern
-  }
+
 }
